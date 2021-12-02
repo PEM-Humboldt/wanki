@@ -1,0 +1,11 @@
+name: wanki
+channels:
+  - conda-forge
+dependencies:
+  - dash
+  - dash-bootstrap-components
+  - pandas
+  - plotly
+  - python
+  - scipy
+  - wiutils>=0.1.0

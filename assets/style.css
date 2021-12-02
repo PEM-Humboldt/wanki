@@ -1,0 +1,169 @@
+.accordion-button, .nav-link {
+    font-size: .8rem;
+}
+
+.btn {
+    text-transform: None;
+}
+
+.card-header {
+    align-items: center;
+    background-color: rgba(255,255,255,.85);
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    display: flex;
+    font-size: .85rem;
+    justify-content: space-between;
+}
+
+.card-header .title {
+    color: #666;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.dash-dropdown {
+    font-size: .8rem;
+    width: 100%;
+}
+
+.data-box-container p {
+    font-size: 0.8rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-check-label, .input-label, .popover-body {
+    font-size: .8rem;
+}
+
+.form-check-input {
+    height: .8rem;
+    width: .8rem;
+}
+
+.form-control {
+    font-size: .8rem;
+}
+
+.item {
+    font-weight: bold;
+}
+
+.input-description {
+    font-weight: bold;
+    width: 100%;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.popover-header {
+    font-size: .85rem;
+}
+
+#app-logo {
+    height: 10vh;
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#data-box {
+    height: 30%;
+}
+
+#data-box .card-body {
+    overflow: auto;
+}
+
+#data-box .btn {
+    font-size: .8rem;
+}
+
+#data-table {
+    font-size: 0.8rem;
+}
+
+#data-table-wrapper {
+    display: none;
+}
+
+#footer {
+    align-items: center;
+    display: flex;
+    font-size: 0.75rem;
+    justify-content: center;
+}
+
+#footer p {
+    margin: 0;
+}
+
+#function-box {
+    height: 65%;
+}
+
+#function-box button, #data-box label {
+    font-size: .8rem;
+    margin-right: 1rem;
+}
+
+#function-box label, #data-box label {
+    font-size: .8rem;
+    margin-right: 1rem;
+}
+
+#function-box p {
+    font-size: .8rem;
+    margin-bottom: 0;
+}
+
+#function-box .card-body {
+    overflow: auto;
+}
+
+#graph-wrapper {
+    display: none;
+}
+
+#header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#header .title {
+    font-size: 2.25rem;
+    font-weight: lighter;
+}
+
+#header p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+#logo {
+    height: 90%;
+}
+
+#logo-container {
+    align-items: center;
+    display: flex;
+    justify-content: end;
+}
+
+#preview-container {
+    overflow: auto;
+    height: calc(80vh - 0.85rem - 1rem - 2rem);
+}
+
+label input {
+    margin-right: .25rem;
+}
+
