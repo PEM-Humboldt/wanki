@@ -1,5 +1,4 @@
 """
-
 """
 import base64
 import io
@@ -124,7 +123,6 @@ def _plot_presence_absence(images, deployments, name):
 
 def generate_callbacks(app):
     """
-
     """
 
     @app.callback(
@@ -253,6 +251,7 @@ def generate_callbacks(app):
             id_ = ctx.triggered[0]["prop_id"].split(".")[0]
             images = pd.read_json(data["images"], orient="split")
             deployments = pd.read_json(data["deployments"], orient="split")
+            projects = pd.read_json(data["projects"], orient="split")
             status = None
             if id_ == "general-count":
                 status = "table"
@@ -283,12 +282,16 @@ def generate_callbacks(app):
                     )
             elif id_ == "dwc-events":
                 status = "table"
-                result = wiutils.create_dwc_events(deployments, language=dwc_lang)
+                result = wiutils.create_dwc_event(
+                    deployments, projects,#language=dwc_lang
+                    )
             elif id_ == "dwc-records":
                 status = "table"
-                result = wiutils.create_dwc_records(
-                    images, deployments, language=dwc_lang
-                )
+                result = wiutils.create_dwc_occurrence(
+                    images, deployments, projects,
+                    #remove_duplicate_kws={"interval": 1, "unit": "hours"}, 
+                    #language=dwc_lang
+                    )
             elif id_ == "deployment-detection":
                 status = "table"
                 result = wiutils.compute_detection_by_deployment(
