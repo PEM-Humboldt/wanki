@@ -16,6 +16,10 @@ cd C:\Usuarios\marcelo\Descargas\wanki
 ```shell
 conda env create -f environment.yml
 ```
+5. Instalar la última versión de wiutils
+```shell
+pip install --upgrade https://github.com/PEM-Humboldt/wiutils/tarball/master
+```
 
 Una vez realizados estos pasos, se creará un entorno virtual con todas las dependencias necesarias para poder usar Wanki. Siga a la sección de ejecución para conocer cómo usar la aplicación.
 

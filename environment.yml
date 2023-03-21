@@ -8,4 +8,4 @@ dependencies:
   - plotly
   - python
   - scipy
-  - wiutils>=0.1.0
+#  - wiutils>=0.1.0
