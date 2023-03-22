@@ -6,15 +6,22 @@ Para instalar y utilizar Wanki, es necesario tener `conda`, un gestor de entorno
 
 Una vez tenga `conda`, la instalación de Wanki se hace de la siguiente manera:
 
-1. Descargar y descomprimir la última versión de Wanki.
+1. Descargar y descomprimir la última versión de Wanki. Esto se puede hacer utilizando [este](https://github.com/PEM-Humboldt/wanki/archive/refs/heads/master.zip) enlace directo de descarga o con el siguiente comando:
+
 ```shell
 git clone https://github.com/PEM-Humboldt/wanki
 ```
+Opcional. En caso de no tener instalados git o pip en anaconda, estos se pueden instalar con este comando:
+
+```shell
+conda install pip git
+```
+
 2. Navegar a la raíz del directorio donde está descomprimida la última instalación de Wanki. Por ejemplo:
 ```shell
 cd wanki
 ```
-3. Ejecutar los siguientes tres comandos:
+3. Instalar el entorno de Wanki:
 ```shell
 conda env create -f environment.yml
 
@@ -23,12 +30,11 @@ conda env create -f environment.yml
 ```shell
 conda activate wanki_env
 ```
-5. Instalar la última versión de wiutils
+5. Instalar la última versión de wiutils:
 ```shell
 pip install --upgrade https://github.com/PEM-Humboldt/wiutils/tarball/master
 
 ```
-
 
 Una vez realizados estos pasos, se creará un entorno virtual con todas las dependencias necesarias para poder usar Wanki. Siga a la sección de ejecución para conocer cómo usar la aplicación.
 
