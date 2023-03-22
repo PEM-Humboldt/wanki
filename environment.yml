@@ -1,4 +1,4 @@
-name: wanki
+name: wanki_env
 channels:
   - conda-forge
 dependencies:
