@@ -317,7 +317,7 @@ def generate_callbacks(app):
                 )
             elif id_ == "deployment-summary":
                 status = "table"
-                result = wiutils.compute_deployment_count_summary(images)
+                result = wiutils.compute_count_summary(images)
             elif id_ == "accumulation-curve":
                 status = "figure"
                 fig = _plot_accumulation_curve(images, deployments)
