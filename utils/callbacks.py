@@ -264,8 +264,9 @@ def generate_callbacks(app):
                     }
                 )
                 result = wiutils.compute_general_count(
-                    images, add_taxonomy=bool(general_count_add_taxonomy)
+                    images, add_taxonomy=True#bool(general_count_add_taxonomy)
                 )
+                result['scientific_name'] = wiutils.get_scientific_name(result)
                 if bool(general_count_threat_status):
                     result = pd.merge(
                         result,
