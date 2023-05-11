@@ -295,7 +295,7 @@ def generate_callbacks(app):
                     )
             elif id_ == "deployment-detection":
                 status = "table"
-                result = wiutils.compute_detection_by_deployment(
+                result = wiutils.compute_detection(
                     images,
                     compute_abundance=deployment_detection_compute_abundance,
                     pivot=deployment_detection_pivot,
