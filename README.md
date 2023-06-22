@@ -1,4 +1,9 @@
 # wanki
+
+<div align="center">
+<img class="img-fluid" src="assets/logo.png" alt="img-verification" >
+</div>
+
 Wanki (imagen en quechua) es una aplicación para explorar y transformar, de manera interactiva, datos provenientes de proyectos en Wildlife Insights.
 
 ## Instalación
@@ -19,7 +24,6 @@ cd wanki
 3. Instalar el entorno de Wanki:
 ```shell
 conda env create -f environment.yml
-
 ```
 
 Una vez realizados estos pasos, se creará un entorno virtual con todas las dependencias necesarias para poder usar Wanki. Siga a la sección de ejecución para conocer cómo usar la aplicación.
