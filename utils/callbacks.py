@@ -65,6 +65,7 @@ def _plot_site_dates(deployments):
 
 
 def _plot_activity_hours(images, names):
+
     images = images.copy()
     images["hour"] = pd.to_datetime(images["timestamp"]).dt.round("H").dt.hour
     df = pd.DataFrame(columns=["x", "y", "name"])
@@ -72,14 +73,13 @@ def _plot_activity_hours(images, names):
     for name in names:
         hours = images[images["scientific_name"] == name]["hour"].to_numpy()
         if np.unique(hours).size > 1:
-            kde = gaussian_kde(hours)
-            df = df.append(
-                pd.DataFrame(
+            kde = gaussian_kde(hours)       
+            df = pd.concat([df, 
+                            pd.DataFrame(
                     {"x": x_range, "y": kde(x_range), "name": [name] * x_range.size}
-                ),
-                ignore_index=True,
-            )
-
+                )
+                            ], 
+                            ignore_index=True)
     if not df.empty:
         fig = px.line(
             df, x="x", y="y", color="name", labels={"x": "Hora", "y": "Densidad"}
@@ -96,7 +96,6 @@ def _plot_activity_hours(images, names):
         )
     else:
         fig = go.Figure()
-
     return fig
 
 
