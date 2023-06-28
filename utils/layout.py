@@ -1,5 +1,4 @@
 """
-
 """
 import base64
 import pathlib
@@ -134,7 +133,13 @@ data_box = dbc.Card(
                                 ),
                                 html.P(
                                     [
-                                        html.Span("Imágenes:", className="item"),
+                                        html.Span("Imágenes totales:", className="item"),
+                                        html.Span(id="project-images-all"),
+                                    ]
+                                ),
+                                html.P(
+                                    [
+                                        html.Span("Imágenes identificadas:", className="item"),
                                         html.Span(id="project-images"),
                                     ]
                                 ),
@@ -142,6 +147,84 @@ data_box = dbc.Card(
                             className="data-box-container",
                             width=5,
                         ),
+                    ]
+                )
+            )
+        ),
+    ],
+    class_name="w-100",
+    id="data-box",
+)
+
+video_box = dbc.Card(
+    [
+        dbc.CardHeader(
+            [
+                html.P("Carga de Videos", className="title"),
+                html.Div(
+                    [
+                        html.I(id="data-check", className="mx-1"),
+                        html.I(className="fas fa-info-circle mx-1", id="data-info"),
+                    ]
+                ),
+                dbc.Tooltip(
+                    """
+                    TODO
+                    Carga de archivo .zip con el proyecto descargado de Wildlife Insights
+                    con toda la información correspondiente. El archivo .zip debe contener
+                    cuatro tablas en formato .csv (i.e. cameras.csv, 
+                    deployments.csv, images.csv y project.csv). Aquellas imágenes que
+                    no tengan alguna identificación hasta por lo menos género serán removidas.
+                    También es posible eliminar registros duplicados dado un intervalo de
+                    tiempo en minutos.
+                """,
+                    target="data-info",
+                ),
+                dbc.Tooltip(
+                    """
+                    TODO
+                    Los datos cargados no son válidos. Asegurese que es un archivo .zip
+                    y contiene todas las tablas asociadas al proyecto.
+                """,
+                    target="data-check",
+                    id="data-check-tooltip",
+                ),
+            ],
+            class_name="card-header",
+        ),
+        dbc.CardBody(
+            dcc.Loading(
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            [
+                                dcc.Upload(
+                                    dbc.Button("Cargar", size="sm"),
+                                    id="upload",
+                                    accept=".mp4",
+                                ),
+                                html.Div(
+                                    [
+                                        html.P(
+                                            "Offset ?",
+                                            className="input-description",
+                                        ),
+                                        dbc.Input(
+                                            type="number",
+                                            min=0,
+                                            max=3600,
+                                            step=1,
+                                            id="remove-duplicates-interval",
+                                            value=30,
+                                        ),
+                                    ],
+                                    className="input-group",
+                                ),
+                            ],
+                            className="data-box-container",
+                            width=7,
+                        ),
+                    
                     ]
                 )
             )
@@ -455,7 +538,6 @@ tables = dbc.Accordion(
     ]
 )
 
-
 figures = dbc.Accordion(
     [
         dbc.AccordionItem(
@@ -644,14 +726,16 @@ layout = dbc.Container(
         dbc.Row(
             [
                 dbc.Col(
-                    [data_box, functions_box],
+                    [data_box,
+                    #video_box, 
+                    functions_box],
                     width=4,
                     class_name="mh-100",
                     id="controls",
                 ),
                 dbc.Col([preview], width=8, class_name="mh-100"),
             ],
-            style={"height": "80vh"},
+            style={"height": "95vh"},
         ),
         dbc.Row([dbc.Col([footer])], style={"height": "5vh"}),
         dcc.Store(id="store", storage_type="memory"),

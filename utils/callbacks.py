@@ -128,6 +128,7 @@ def generate_callbacks(app):
         Output("store", "data"),
         Output("project-name", "children"),
         Output("project-sites", "children"),
+        Output("project-images-all", "children"),
         Output("project-images", "children"),
         Output("fig-species-list-1", "options"),
         Output("fig-species-list-2", "options"),
@@ -146,6 +147,7 @@ def generate_callbacks(app):
             stem = pathlib.Path(name).stem
             try:
                 images = pd.read_csv(io.BytesIO(z.read(f"{stem}/images.csv")))
+                nimages_all = images.shape[0]
                 images = wiutils.remove_unidentified(images, rank="genus")
                 images["scientific_name"] = wiutils.get_scientific_name(
                     images, keep_genus=True, add_qualifier=True
@@ -178,7 +180,7 @@ def generate_callbacks(app):
                 for name in images["scientific_name"].dropna().sort_values().unique()
             ]
 
-            return data, name, sites, nimages, options, options, "fas fa-check-circle", {"display": "none"}
+            return data, name, sites, nimages_all, nimages, options, options, "fas fa-check-circle", {"display": "none"}
         else:
             return None, "", "", "", [], [], "", {}
 
@@ -283,14 +285,12 @@ def generate_callbacks(app):
             elif id_ == "dwc-events":
                 status = "table"
                 result = wiutils.create_dwc_event(
-                    deployments, projects,#language=dwc_lang
+                    deployments, projects,
                     )
             elif id_ == "dwc-records":
                 status = "table"
                 result = wiutils.create_dwc_occurrence(
                     images, deployments, projects,
-                    #remove_duplicate_kws={"interval": 1, "unit": "hours"}, 
-                    #language=dwc_lang
                     )
             elif id_ == "deployment-detection":
                 status = "table"
