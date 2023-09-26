@@ -687,7 +687,7 @@ preview = dbc.Card(
                     html.Div(
                         [
                             html.Div(
-                                DataTable(id="data-table", export_format="xlsx"),
+                                DataTable(id="data-table", export_format="csv"),
                                 id="data-table-wrapper",
                             ),
                             html.Div(dcc.Graph(id="graph"), id="graph-wrapper",),
