@@ -5,6 +5,7 @@ import io
 import pathlib
 from zipfile import ZipFile
 
+import cv2
 import dash
 import numpy as np
 import pandas as pd
@@ -138,6 +139,7 @@ def generate_callbacks(app):
         State("upload", "filename"),
         State("remove-duplicates", "value"),
         State("remove-duplicates-interval", "value"),
+
     )
     def store_project(content, name, remove_duplicates, remove_duplicates_interval):
         if content is not None:
@@ -181,6 +183,37 @@ def generate_callbacks(app):
             ]
 
             return data, name, sites, nimages_all, nimages, options, options, "fas fa-check-circle", {"display": "none"}
+        else:
+            return None, "", "", "", [], [], "", {}
+    # Video
+    @app.callback(
+        Output("store", "video"),
+        Output("video-name", "children"),
+        Output("video-seconds", "children"),
+        Output("video-frames", "children"),
+        Output("video-check", "className"),
+        Output("video-check-tooltip", "style"),
+        Input("video-upload", "contents"),
+        State("video-upload", "filename"),
+    )
+    def store_video(content, name):
+        if content is not None:
+            string = content.split(",")[1]
+            decoded = base64.b64decode(string)
+            bytesio_object = io.BytesIO(decoded)
+            with open("video.MP4", "wb") as f:
+                f.write(bytesio_object.getbuffer())      
+            
+            try:
+                video = cv2.VideoCapture("video.MP4")  
+            except KeyError:
+                return None, "", "", "", "fas fa-times-circle", {"display": "float"}
+            
+            frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+            seconds = int(frames/video.get(cv2.CAP_PROP_FPS))
+            print('here123')
+            print(name, frames, seconds)
+            return '', name, seconds, frames, "fas fa-check-circle", {"display": "none"}
         else:
             return None, "", "", "", [], [], "", {}
 
