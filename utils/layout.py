@@ -10,7 +10,9 @@ from dash.dash_table import DataTable
 
 
 logo_path = pathlib.Path(__file__).parents[1].joinpath("assets/logo.png").as_posix()
+
 encoded_image = base64.b64encode(open(logo_path, "rb").read())
+
 header = html.Div(
     [
         html.Div(
@@ -32,7 +34,9 @@ header = html.Div(
 humboldt_logo_path = (
     pathlib.Path(__file__).parents[1].joinpath("assets/humboldt_logo.png").as_posix()
 )
+
 encoded_image = base64.b64encode(open(humboldt_logo_path, "rb").read())
+
 logo = html.Div(
     [
         html.Img(
@@ -45,11 +49,11 @@ logo = html.Div(
     id="logo-container",
 )
 
-data_box = dbc.Card(
+images = dbc.Card(
     [
         dbc.CardHeader(
             [
-                html.P("Carga de datos", className="title"),
+                html.P("Carga de imágenes", className="title"),
                 html.Div(
                     [
                         html.I(id="data-check", className="mx-1"),
@@ -153,23 +157,22 @@ data_box = dbc.Card(
         ),
     ],
     class_name="w-100",
-    id="data-box",
+    id="images",
 )
 
-video_box = dbc.Card(
+videos = dbc.Card(
     [
         dbc.CardHeader(
             [
-                html.P("Carga de Videos", className="title"),
+                html.P("Carga de videos", className="title"),
                 html.Div(
                     [
-                        html.I(id="data-check", className="mx-1"),
-                        html.I(className="fas fa-info-circle mx-1", id="data-info"),
+                        html.I(id="video-check", className="mx-1"),
+                        html.I(className="fas fa-info-circle mx-1", id="video-info"),
                     ]
                 ),
                 dbc.Tooltip(
                     """
-                    TODO
                     Carga de archivo .zip con el proyecto descargado de Wildlife Insights
                     con toda la información correspondiente. El archivo .zip debe contener
                     cuatro tablas en formato .csv (i.e. cameras.csv, 
@@ -178,16 +181,15 @@ video_box = dbc.Card(
                     También es posible eliminar registros duplicados dado un intervalo de
                     tiempo en minutos.
                 """,
-                    target="data-info",
+                    target="video-info",
                 ),
                 dbc.Tooltip(
                     """
-                    TODO
                     Los datos cargados no son válidos. Asegurese que es un archivo .zip
                     y contiene todas las tablas asociadas al proyecto.
                 """,
-                    target="data-check",
-                    id="data-check-tooltip",
+                    target="video-check",
+                    id="video-check-tooltip",
                 ),
             ],
             class_name="card-header",
@@ -200,39 +202,76 @@ video_box = dbc.Card(
                             [
                                 dcc.Upload(
                                     dbc.Button("Cargar", size="sm"),
-                                    id="upload",
-                                    accept=".mp4",
-                                ),
-                                html.Div(
-                                    [
-                                        html.P(
-                                            "Offset ?",
-                                            className="input-description",
-                                        ),
-                                        dbc.Input(
-                                            type="number",
-                                            min=0,
-                                            max=3600,
-                                            step=1,
-                                            id="remove-duplicates-interval",
-                                            value=30,
-                                        ),
-                                    ],
-                                    className="input-group",
+                                    id="video-upload",
+                                    #accept=".MP4",
                                 ),
                             ],
-                            className="data-box-container",
+                            className="video-box-container",
                             width=7,
                         ),
-                    
+                        dbc.Col(
+                            [
+                                html.P(
+                                    [
+                                        html.Span("Nombre:", className="item"),
+                                        html.Span(id="video-name"),
+                                    ]
+                                ),
+                                html.P(
+                                    [
+                                        html.Span("Segundos:", className="item"),
+                                        html.Span(id="video-seconds"),
+                                    ]
+                                ),
+                                html.P(
+                                    [
+                                        html.Span("Cuadros:", className="item"),
+                                        html.Span(id="video-frames"),
+                                    ]
+                                ),
+                            ],
+                            className="video-box-container",
+                            width=5,
+                        ),
                     ]
                 )
             )
         ),
     ],
     class_name="w-100",
+    id="videos",
+)
+
+data_box = dbc.Card(
+    [
+        dbc.CardHeader(
+            [
+                html.P("Carga de datos", className="title"),
+                html.I(className="fas fa-info-circle", id="data2-info"),
+                dbc.Tooltip(
+                    """
+                    Funciones para generar figuras o tablas a partir de la información
+                    del proyecto cargado.
+                """,
+                    target="data2-info",
+                ),
+            ],
+            class_name="card-header",
+        ),
+        dbc.CardBody(
+            [
+                dbc.Tabs(
+                    [dbc.Tab(images, label="Imágenes"), 
+                    dbc.Tab(videos, label="Videos")
+                    ]
+                )
+            ],
+        ),
+    ],
+    class_name="w-100",
     id="data-box",
 )
+
 
 tables = dbc.Accordion(
     [
@@ -633,6 +672,51 @@ figures = dbc.Accordion(
     ]
 )
 
+conversor = dbc.Accordion(
+    [
+        dbc.AccordionItem(
+            [
+                dbc.Popover(
+                    [
+                        dbc.PopoverHeader("Convertidor de video en imágenes"),
+                        dbc.PopoverBody(
+                            """
+                        Especies registradas por días de muestreo.
+                    """
+                        ),
+                    ],
+                    target="convert-video-to-images-item",
+                    trigger="hover",
+                ),
+                dbc.Button("Ejecutar", size="sm", id="convert-video-to-image", n_clicks=0),
+                html.Div(
+                    [
+                        html.Div(
+                            [
+                                html.P(
+                                    "Cortes (segundos)", className="input-description"
+                                ),
+                                dbc.Input(
+                                    type="number",
+                                    min=0,
+                                    max=60,
+                                    step=1,
+                                    id="offset-seconds",
+                                    value=1,
+                                ),
+                            ],
+                            className="input-group",
+                        ),
+                    ]
+)     
+            ],
+            title="Convertidor de video en imágenes",
+            id="convert-video-to-images-item",
+        ),
+    
+    ]
+)
+
 functions_box = dbc.Card(
     [
         dbc.CardHeader(
@@ -652,7 +736,9 @@ functions_box = dbc.Card(
         dbc.CardBody(
             [
                 dbc.Tabs(
-                    [dbc.Tab(figures, label="Figuras"), dbc.Tab(tables, label="Tablas")]
+                    [dbc.Tab(figures, label="Figuras"), dbc.Tab(tables, label="Tablas"),
+                    dbc.Tab(conversor, label="Convertidor")
+                    ]
                 )
             ],
         ),
@@ -660,6 +746,7 @@ functions_box = dbc.Card(
     class_name="w-100",
     id="function-box",
 )
+
 
 preview = dbc.Card(
     [
@@ -687,7 +774,7 @@ preview = dbc.Card(
                     html.Div(
                         [
                             html.Div(
-                                DataTable(id="data-table", export_format="csv"),
+                                DataTable(id="data-table", export_format="xlsx"),
                                 id="data-table-wrapper",
                             ),
                             html.Div(dcc.Graph(id="graph"), id="graph-wrapper",),
@@ -727,7 +814,6 @@ layout = dbc.Container(
             [
                 dbc.Col(
                     [data_box,
-                    #video_box, 
                     functions_box],
                     width=4,
                     class_name="mh-100",
