@@ -1,3 +1,7 @@
+> Este repositorio se ha modificado a nuevos estándares, consulte [cam-trap-flow](https://github.com/PEM-Humboldt/cam-trap-flow) y [dashboard-red-otus](https://github.com/PEM-Humboldt/dashboard-red-otus) para funcionalidades similares
+
+---
+
 # wanki
 
 <div align="center">
